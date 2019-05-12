@@ -23,7 +23,7 @@ const publishSensorData = () => {
     console.log(data);
     const ledStatus = LED.readSync();
     const payload = Object.assign({}, data, {ledStatus: ledStatus});
-    device.publish('topic_2', JSON.stringify({clientId: CLIENT_ID, payload: data}, null, 2));
+    device.publish('topic_2', JSON.stringify({clientId: CLIENT_ID, payload: payload}, null, 2));
     setTimeout(publishSensorData, 1000);
 }
 
