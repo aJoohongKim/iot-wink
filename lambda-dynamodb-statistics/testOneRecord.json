@@ -1,0 +1,20 @@
+{
+    "Records": [
+      {
+        "kinesis": {
+          "partitionKey": "partitionKey-03",
+          "kinesisSchemaVersion": "1.0",
+          "data": "eyJjbGllbnRJZCI6ImNsaWVudC1pZC0xIiwiZXZlbnRfYXQiOiIyMDE5LTA1LTEyIDE3OjU0OjAwLjAwMCIsImFjY2VsX3giOjAuMDcwNzMxNTQwODgyNTk2ODcsImFjY2VsX3kiOjAuMDkyNjE4NzI5MTYyNjQ2ODgsImFjY2VsX3oiOjAuMzMzMjgyODY4Mjc0MjQ5NSwiZ3lyb194IjowLjAwNjQxOTc4OTk1MzI2NTI5OSwiZ3lyb195IjowLjAwNTc4MzM0ODgzNzE1NDQ2OCwiZ3lyb196IjowLjAwNjI1ODIwNDkwODU5MDI5LCJyb3RhdGlvbl94IjowLjI3MDQ0OTk3Njg4NjUzODkzLCJyb3RhdGlvbl95IjowLjMzMDM3MjQyNzc5OTIwNzIsImF2Z1RlbXAiOjI4Ljc4MDQ0ODY1NDAzNzg4LCJsZWRTdGF0dXMiOjAsImNvdW50ZXIiOjE2MDZ9",
+          "sequenceNumber": "49545115243490985018280067714973144582180062593244200961",
+          "approximateArrivalTimestamp": 1428537600
+        },
+        "eventSource": "aws:kinesis",
+        "eventID": "shardId-000000000000:49545115243490985018280067714973144582180062593244200961",
+        "invokeIdentityArn": "arn:aws:iam::EXAMPLE",
+        "eventVersion": "1.0",
+        "eventName": "aws:kinesis:record",
+        "eventSourceARN": "arn:aws:kinesis:EXAMPLE",
+        "awsRegion": "ap-northeast-2"
+      }
+    ]
+  }
