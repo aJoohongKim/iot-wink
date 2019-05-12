@@ -37,13 +37,13 @@ device
 
 device
   .on('message', function(topic, payload) {
-      var CMDS = {
-          ON: function() {LED.writeSync(1);},
-          OFF: function() {LED.writeSync(0);}
-      };
       var message = JSON.parse(payload);
       console.log('message:', topic, message);
       if (topic === `commands/${CLIENT_ID}/led`) {
+        let CMDS = {
+          ON: function() {LED.writeSync(1);},
+          OFF: function() {LED.writeSync(0);}
+        };
         CMDS[message.cmd]();
       } else {
         console.log('message', topic, payload.toString());
