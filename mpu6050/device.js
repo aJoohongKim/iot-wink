@@ -1,16 +1,16 @@
-var awsIot = require('aws-iot-device-sdk');
-var i2c = require('i2c-bus');
-var MPU6050 = require('i2c-mpu6050');
-var Gpio = require('onoff').Gpio;
+const awsIot = require('aws-iot-device-sdk');
+const i2c = require('i2c-bus');
+const MPU6050 = require('i2c-mpu6050');
+const Gpio = require('onoff').Gpio;
 
-var CLIENT_ID = 'client-id-1';
-var address = 0x68;
-var i2c1 = i2c.openSync(1);
-var LED = new Gpio(4, 'out'); 
+const CLIENT_ID = 'client-id-1';
+const address = 0x68;
+const i2c1 = i2c.openSync(1);
+const LED = new Gpio(4, 'out'); 
  
-var sensor = new MPU6050(i2c1, address);
+const sensor = new MPU6050(i2c1, address);
  
-var device = awsIot.device({
+const device = awsIot.device({
     keyPath: "certs/ec9fe0c97f-private.pem.key",
    certPath: "certs/ec9fe0c97f-certificate.pem.crt",
      caPath: "certs/root-CA.crt",
@@ -18,11 +18,11 @@ var device = awsIot.device({
        host: "a2k5uia19r8kbb-ats.iot.ap-northeast-2.amazonaws.com"
  });
  
-function publishSensorData() {
-    var data = sensor.readSync();
+const publishSensorData = () => {
+    const data = sensor.readSync();
     console.log(data);
-    var ledStatus = LED.readSync();
-    var payload = Object.assign({}, data, {ledStatus: ledStatus});
+    const ledStatus = LED.readSync();
+    const payload = Object.assign({}, data, {ledStatus: ledStatus});
     device.publish('topic_2', JSON.stringify({clientId: CLIENT_ID, payload: data}, null, 2));
     setTimeout(publishSensorData, 1000);
 }
@@ -37,12 +37,12 @@ device
 
 device
   .on('message', function(topic, payload) {
-      var message = JSON.parse(payload);
+      const message = JSON.parse(payload);
       console.log('message:', topic, message);
       if (topic === `commands/${CLIENT_ID}/led`) {
         let CMDS = {
-          ON: function() {LED.writeSync(1);},
-          OFF: function() {LED.writeSync(0);}
+          ON: () => {LED.writeSync(1);},
+          OFF: () => {LED.writeSync(0);}
         };
         CMDS[message.cmd]();
       } else {

@@ -1,9 +1,9 @@
-var awsIot = require('aws-iot-device-sdk');
+const awsIot = require('aws-iot-device-sdk');
 const ADXL345 = require('adxl345-sensor');
 
 const adxl345 = new ADXL345();
 
-var device = awsIot.device({
+const device = awsIot.device({
    keyPath: "certs/ec9fe0c97f-private.pem.key",
   certPath: "certs/ec9fe0c97f-certificate.pem.crt",
     caPath: "certs/root-CA.crt",
