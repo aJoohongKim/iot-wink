@@ -30,19 +30,20 @@ function publishSensorData() {
 device
   .on('connect', function() {
     console.log('connect');
-    device.subscribe(`commands/${CLIENT_ID}`);
+    device.subscribe(`commands/${CLIENT_ID}/#`);
     device.publish('topic_2', JSON.stringify({ test_data: 1}));
     publishSensorData();
   });
 
 device
   .on('message', function(topic, payload) {
-      CMDS = {
+      var CMDS = {
           ON: function() {LED.writeSync(1);},
           OFF: function() {LED.writeSync(0);}
       };
+      var message = JSON.parse(payload);
+      console.log('message:', topic, message);
       if (topic === `commands/${CLIENT_ID}/led`) {
-        var message = JSON.parse(payload);
         CMDS[message.cmd]();
       } else {
         console.log('message', topic, payload.toString());

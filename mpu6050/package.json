@@ -12,6 +12,7 @@
   "dependencies": {
     "aws-iot-device-sdk": "^2.2.1",
     "i2c-bus": "^4.0.9",
-    "i2c-mpu6050": "^2.3.0"
+    "i2c-mpu6050": "^2.3.0",
+    "onoff": "^4.1.1"
   }
 }
