@@ -18,11 +18,14 @@ const device = awsIot.device({
        host: "a2k5uia19r8kbb-ats.iot.ap-northeast-2.amazonaws.com"
  });
  
+let counter = 0;
+
 const publishSensorData = () => {
+    counter = counter + 1;
     const data = sensor.readSync();
-    console.log(data);
     const ledStatus = LED.readSync();
-    const payload = Object.assign({}, data, {ledStatus: ledStatus});
+    const payload = Object.assign({}, data, {ledStatus: ledStatus, counter: counter});
+    console.log(payload);
     device.publish('topic_2', JSON.stringify({clientId: CLIENT_ID, payload: payload}, null, 2));
     setTimeout(publishSensorData, 1000);
 }
