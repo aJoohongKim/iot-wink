@@ -1,13 +1,13 @@
 {
-  "name": "create-react-app-redux-saga-boilerplate",
-  "description": "Filling the gaps for non-trival apps",
+  "name": "iot-wink",
+  "description": "wearable healthcare IoT solution for pets",
   "keywords": [
     "react",
     "redux",
     "saga"
   ],
   "version": "1.0.0",
-  "author": "David Broadhurst",
+  "author": "Joohong Kim",
   "license": "MIT",
   "private": true,
   "dependencies": {
