@@ -5,13 +5,9 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
 
 export default class HeaderComponent extends React.Component {
   static propTypes = {
-    testSaga: PropTypes.object
   }
 
   render() {
-    const { message } = this.props.testSaga
-    console.log(message)
-
     return (
       <div>
         <Toolbar>
