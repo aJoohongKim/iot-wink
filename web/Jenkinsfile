@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+    environment {
+        // Slack configuration
+        SLACK_COLOR_DANGER  = '#E01563'
+        SLACK_COLOR_INFO    = '#6ECADC'
+        SLACK_COLOR_WARNING = '#FFC300'
+        SLACK_COLOR_GOOD    = '#3EB991'
+    } // environment
+    stages {
+      stage('Install') {
+            steps {
+                echo 'Install'
+                sh "npm install"
+            }
+        }
+        stage('Compile') {
+            steps {
+                echo 'build angular... not implemented'
+                sh "npm run build"
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying'
+                // sh "ssh ec2-user@server_url 'cd /var/www/html; git pull origin develop; sudo systemctl restart httpd; sudo systemctl status httpd; sudo systemctl restart php-fpm; sudo systemctl status php-fpm'"
+                sh "aws s3 rm s3://08liter-sitetracker --recursive"
+                sh "aws s3 cp ./build/ s3://08liter-sitetracker/ --recursive"
+                sh "mv ../dev_node_modules ./node_modules"
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            wrap([$class: 'BuildUser']) {
+                echo "${BUILD_USER}"
+                sh 'printenv'
+                echo 'This will run only if successful'
+                slackSend (color: "${env.SLACK_COLOR_GOOD}",
+                    channel: "#www",
+                    message: "*SUCCESS:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n More info at: ${env.BUILD_URL}")
+            }
+        }
+        failure {
+            echo 'This will run only if failed'
+            slackSend (color: "${env.SLACK_COLOR_GOOD}",
+                channel: "#www",
+                message: "*Failure:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${env.BUILD_USER_ID}\n More info at: ${env.BUILD_URL}")
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}
