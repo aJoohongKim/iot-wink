@@ -1,4 +1,5 @@
 import * as types from './types';
+import moment from 'moment';
 
 let initialState = {
   Items: [],
@@ -14,7 +15,14 @@ let initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_LATEST_STATISTICS_SUCCESS:
-      return {...state, ...action.payload};
+      const nextState = {...state, ...action.payload};
+      nextState.Items = nextState.Items.map((item) => {
+        const utcTime = moment.utc(item.event_at).toDate();
+        item.event_at = moment(utcTime).format('YYYY-MM-DD HH:mm:ss.sss');
+        return item;
+      });
+      return nextState;
+      // return {...state, ...action.payload};
     case types.FETCH_LATEST_STATISTICS_FAILURE:
       return state.error = action.payload;
     default:
