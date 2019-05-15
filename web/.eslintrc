@@ -1,6 +1,30 @@
 {
-  "extends": "react-app",
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "plugin:redux-saga/recommended"],
   "rules": {
-    "react/prop-types": 2
+    "react/jsx-filename-extension": [2, { "extensions": [".js"] }],
+    "react/forbid-prop-types": 0,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "dot-notation": 0,
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src"],
+        "extensions": [".js", ".native.js", "json"]
+      }
+    }
+  },
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "plugins": ["redux-saga", "react"],
+  "globals": {
+    "__DEV__": true
   }
 }
