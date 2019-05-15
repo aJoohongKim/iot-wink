@@ -7,6 +7,7 @@ class Hello extends Component {
     <ul>
       <li><Link to="/device">Device</Link></li>
       <li><Link to="/stat">Statistics</Link></li>
+      <li><Link to="/graph">Graph</Link></li>
     </ul>
     </div>;
   }

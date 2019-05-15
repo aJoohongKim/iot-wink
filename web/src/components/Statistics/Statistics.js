@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import RaisedButton from 'material-ui/RaisedButton';
 
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
+
 const style = {
   margin: 12,
 };
@@ -12,12 +22,12 @@ export default class StatisticsComponent extends Component {
     statistics: PropTypes.object,
     fetch_statistics: PropTypes.func,
   }
-
+  
   componentDidMount() {
     this.props.fetch_statistics({
       clientId: 'client-id-1',
       event_at: '2019-05-14 18:13:00.000',
-      limit: 30,
+      limit: 60,
       scanIndexForward: false
     });
   }
@@ -26,7 +36,7 @@ export default class StatisticsComponent extends Component {
     this.props.fetch_statistics({
       clientId: 'client-id-1',
       event_at: '2019-05-14 18:13:00.000',
-      limit: 30,
+      limit: 60,
       scanIndexForward: false
     });
   }
@@ -39,6 +49,34 @@ export default class StatisticsComponent extends Component {
   //     scanIndexForward: true
   //   });
   // }
+   renderItemInTable = (items) => (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHeaderColumn>Time</TableHeaderColumn>
+          <TableHeaderColumn>Gyro</TableHeaderColumn>
+          <TableHeaderColumn>Accelerometer</TableHeaderColumn>
+          <TableHeaderColumn>Rotation</TableHeaderColumn>
+          <TableHeaderColumn>Temperature</TableHeaderColumn>
+          <TableHeaderColumn>Counter</TableHeaderColumn>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+      {
+        items.map((item) => {return (
+          <TableRow key={item.event_at}>
+            <TableRowColumn>{item.event_at}</TableRowColumn>
+            <TableRowColumn>x: {item.gyro_x}<br />y: {item.gyro_y}<br />z: {item.gyro_z}</TableRowColumn>
+            <TableRowColumn>x: {item.accel_x}<br />y: {item.accel_y}<br />z: {item.accel_z}</TableRowColumn>
+            <TableRowColumn>x: {item.rotation_x}<br />y: {item.rotation_y}</TableRowColumn>
+            <TableRowColumn>{item.avgTemp}</TableRowColumn>
+            <TableRowColumn>{item.counter}</TableRowColumn>
+          </TableRow>
+        )})
+      }
+      </TableBody>
+    </Table>
+  );
 
   render() {
     const { Items } = this.props.statistics
@@ -47,9 +85,7 @@ export default class StatisticsComponent extends Component {
         <Link to="/">Home</Link><br />
         <RaisedButton label="Refresh" primary={true} style={style} onClick={this.handle_refresh}/>
         <br/>
-        <code>
-            {JSON.stringify(Items, null, 2)}
-        </code>
+        {this.renderItemInTable(Items)}
       </div>
     )
   }
