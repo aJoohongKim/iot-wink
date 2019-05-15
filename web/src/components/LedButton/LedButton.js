@@ -15,7 +15,6 @@ export default class LedButtonComponent extends React.Component {
   };
 
   handle_onclick = (event) => {
-    console.log('button clicked');
     const { device: {ledStatus}, turn_on, turn_off } = this.props;
     if (ledStatus === 0) {
       turn_on();
